@@ -1,29 +1,105 @@
 \chapter{Background}
 
+This chapter aims to explain the basic concepts that are the most important to the work in this thesis.
 
-\section{Artificial Intelligence}
 
+% -------------------------------------------------------
+% -------------------------------------------------------
+% ----------------- Machine Learning --------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
 \section{Machine Learning}
+
+The following sections will define the term 'Machine Learning'. 
+It will describe some various ways that machine learning can be applied.
+
+
+
+\subsection{What is machine learning?}
+
+As a term, 'Machine Learning' is a subcategory if the umbrella term 'Artificial Intelligence'.
+It is proposed as an alternative to traditional algorithms. 
+Machine Learning takes a set of input (training) data, and attempts to reason about some quality of the input, 
+without the author of the program explicitly telling the program what quality of the input data we are interested in reasoning about.
+Instead, the author provides the Machine Learning model with their optimal target for the given input,
+and the model must attempt to generalize over, and design its own algorithm to fit the target.
+
+This approach has become useful in problems where discovering the target based on the model input becomes computationally intractible,
+or when the target cannot be determined as a direct consequence of the input. 
+An example of such a problem is sentiment analysis of text input. 
+Given the sentence 'The nice boy made fun of the kind girl', 
+it is difficult to design rules which can capture the sentiment of the sentence.
+On one hand, the words 'nice', 'fun', and 'kind' indicate this sentence may have a positive sentiment.
+In reality, our ability to reason tells us that this is not the case, and the sentence is of a negative nature.
+
+Machine Learning is deeply rooted in Bayesian Statistics. (Noen gode setninger om bayes. Gjerne bayes teorem? Ikke mer enn et avsnitt. Dette er en AI-oppgave, ikke en statistikk-oppgave.)
+
+
 \subsection{Linear Regression}
+
+As a first study in the implementation of the concept 'Machine Learning', we look at Linear Regression.
+To explan Linear Regression, we (tar for oss) an example in a two dimensional, euclidean space.
+
+Given a set of points in the euclidean space, we wish to find some
+
+
+weights
+bias
+\subsubsection{Loss}
+loss
+
+
+
 \subsection{Multi Layer Perceptron}
 \subsection{Neural Networks}
+underfitting and overfitting?
 \subsubsection{Linear Layers}
 \subsubsection{Activation functions}
-\subsubsection{Loss functions}
 \subsection{Backpropagation}
 \subsection{Supervised and unsupervised learning}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% ---------------------- Graphs -------------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
 \section{Graphs}
 \subsection{Nodes and Edges}
 \subsection{Directed Acyclic Graphs}
 
 
+
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% ---------------- Graph Neural Networks ----------------
+% -------------------------------------------------------
+% -------------------------------------------------------
 \section{Graph Neural Networks}
 \subsection{The Convolution Layer}
 \subsection{Permutation invariance and equivariance}
 \subsection{Attention and Message Passing}
 
 
+
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% --------------- Gated Recurrent Units -----------------
+% -------------------------------------------------------
+% -------------------------------------------------------
 \section{Gated Recurrent Units}
 \subsection{Backpropagation Through Time}
