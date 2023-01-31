@@ -1,5 +1,6 @@
 import numpy as np                 # v 1.19.2
 import matplotlib.pyplot as plt    # v 3.3.2
+import matplotlib
 
 # Enter x and y coordinates of points and colors
 xs = [-2, -1, 1, 2]
@@ -19,21 +20,30 @@ ax.plot([-2, -2], [-0.5, 0], c="m", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-2, -1.5], [0, 0], c="m", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-1.5, -1.5], [-0.5, 0], c="m", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-2, -1.5], [-0.5, -0.5], c="m", ls='--', lw=1.5, alpha=0.5)
+rect1 = matplotlib.patches.Rectangle((-2,-0.5), 0.5, 0.5, color='m', alpha=0.15)
+ax.add_patch(rect1)
 
 ax.plot([-1, -1], [1, 0.5], c="g", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-1, -1.5], [1, 1], c="g", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-1.5, -1.5], [0.5, 1], c="g", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-1, -1.5], [0.5, 0.5], c="g", ls='--', lw=1.5, alpha=0.5)
+rect2 = matplotlib.patches.Rectangle((-1.5,0.5), 0.5, 0.5, color='g', alpha=0.15)
+ax.add_patch(rect2)
 
 ax.plot([1, 1], [1, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
 ax.plot([1, 1.5], [1.5, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
 ax.plot([1.5, 1.5], [1, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
 ax.plot([1, 1.5], [1, 1], c="r", ls='--', lw=1.5, alpha=0.5)
+rect3 = matplotlib.patches.Rectangle((1, 1), 0.5, 0.5, color='r', alpha=0.15)
+ax.add_patch(rect3)
 
 ax.plot([2, 2], [2.5, 2], c="b", ls='--', lw=1.5, alpha=0.5)
 ax.plot([2, 1.5], [2.5, 2.5], c="b", ls='--', lw=1.5, alpha=0.5)
 ax.plot([1.5, 1.5], [2.5, 2], c="b", ls='--', lw=1.5, alpha=0.5)
 ax.plot([2, 1.5], [2, 2], c="b", ls='--', lw=1.5, alpha=0.5)
+rect4 = matplotlib.patches.Rectangle((1.5,2), 0.5, 0.5, color='b', alpha=0.15)
+ax.add_patch(rect4)
+
 
 
 ax.plot([-6, 6], [-2, 4])
