@@ -15,6 +15,7 @@ ticks_frequency = 1
 fig, ax = plt.subplots(figsize=(10, 10))
 ax.scatter(xs, ys, c=colors)
 
+"""
 # Draw lines connecting points to axes
 ax.plot([-2, -2], [-0.5, 0], c="m", ls='--', lw=1.5, alpha=0.5)
 ax.plot([-2, -1.5], [0, 0], c="m", ls='--', lw=1.5, alpha=0.5)
@@ -44,9 +45,8 @@ ax.plot([2, 1.5], [2, 2], c="b", ls='--', lw=1.5, alpha=0.5)
 rect4 = matplotlib.patches.Rectangle((1.5,2), 0.5, 0.5, color='b', alpha=0.15)
 ax.add_patch(rect4)
 
-
-
 ax.plot([-6, 6], [-2, 4])
+"""
 
 # Set identical scales for both axes
 ax.set(xlim=(xmin-1, xmax+1), ylim=(ymin-1, ymax+1), aspect='equal')
@@ -60,8 +60,8 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 # Create 'x' and 'y' labels placed at the end of the axes
-ax.set_xlabel('x', size=14, labelpad=-24, x=1.03)
-ax.set_ylabel('y', size=14, labelpad=-21, y=1.02, rotation=0)
+ax.set_xlabel('x', size=14, labelpad=-1, x=0.98)
+ax.set_ylabel('y', size=14, labelpad=-1, y=0.98, rotation=0)
 
 # Create custom major ticks to determine position of tick labels
 x_ticks = np.arange(xmin, xmax+1, ticks_frequency)
@@ -77,9 +77,4 @@ ax.set_yticks(np.arange(ymin, ymax+1), minor=True)
 # Draw major and minor grid lines
 ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
 
-# Draw arrows
-arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-
-plt.show()
+plt.savefig('../figures/linreg_input_illustrated.png', format="png", bbox_inches='tight')

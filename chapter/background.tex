@@ -42,30 +42,56 @@ To explan linear regression, we view an example in a two dimensional, euclidean 
 We are given a set of input data values $ X $ . Each input value $ x_i \in X $ has a corresponding output value $ y_i \in Y $.
 We can plot each input value, and its corresponding output value as coordinates.
 
+
 To describe a function that best maps the given inputs with their related outputs, 
 we introduce two variables $ w_0 $ and $ b_0 $. We define a function to map our input values to their corresponding output.
+
 \[
         f(x) = w_0x + b \tag{2.1} \label{linreg}
 \]
 
-We also introduce some measure of how well our function defined in $ \eqref{linreg} $
+We also introduce some measure of how well our function $ \eqref{linreg} $
 maps our input to our output. As we tune our function variables $ w_0 $ and $ b_0 $ to better map the input to its corresponding output,
-the measure will decrease.
+the measure will decrease. There exists values for our variables $ w_0 $ and $ b_0 $  such that the measure defined in $ \eqref{mse} $ reaches its lowest possible value.
+In this state, the function optimally maps the input data to with its corresponding output, given our function.
 
 \[
-    \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \big(y_i - f(x_i)\big)^2
+    \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \big(y_i - f(x_i)\big)^2 \tag{2.2} \label{mse}
 \]
 
+Of course, the function defined in $ \eqref{linreg} $ is arbitrary. 
+We can add or remove existing or additional function variables as we wish,
+if we see that changing the function structure improves at mapping the input to the output.
+ 
+\textbf{Referanse til taylor series expansion? Finn i Calculus bok}
 
-
-
-
-
+\begin{figure}
+    \centering
+    \subfloat[\centering Input x values plotted against their corresponding y values]{{\includegraphics[width=7cm]{figures/background/linreg_input_illustrated.png} }}%
+    \qquad
+    \subfloat[\centering label 2]{{\includegraphics[width=7cm]{figures/background/MSE_illustrated.png}}}
+    \caption{Linear regression illustrated}%
+    \label{fig:linearRegression}%
+\end{figure}
 
 
 
 \subsubsection{Loss}
-loss
+
+In the previous section, a measure of how 'wrong' a mapping of input points to their corresponding output points was defined.
+In the litterature, this measure is referred to as the loss function. 
+The loss function defined in $ \eqref{mse} $ is named 'Mean Squared Error Loss', 
+due to the fact that it is defined by the mean of the squared difference between our function's predictions and the true values.
+
+It is possible to define different loss functions. 
+Different loss functions will interpret the performance of a functions mapping of the given input data to its corresponding output in different ways.
+If we 
+
+\[ 
+    \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \sqrt{\big(y_i - f(x_i)\big)^2} \tag{2.2} \label{mae} 
+\]
+
+
 
 
 
