@@ -56,12 +56,25 @@ the measure will decrease. There exists values for our variables $ w_0 $ and $ b
 In this state, the function optimally maps the input data to with its corresponding output, given our function.
 
 \[
-    \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \big(y_i - f(x_i)\big)^2 \tag{2.2} \label{mse}
+    \mathcal{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \big(y_i - f(x_i)\big)^2 \tag{2.2} \label{func:mse}
 \]
 
 Of course, the function defined in $ \eqref{linreg} $ is arbitrary. 
 We can add or remove existing or additional function variables as we wish,
 if we see that changing the function structure improves at mapping the input to the output.
+This example has applied linear regression to single-dimensional inputs and single-dimensional outputs,
+but the same method can be applied to inputs and outputs of higher dimensions.
+The method can also be applied when the inputs and outputs are of different dimensions, by applying linear transformations.
+A general formula for linear regression can therefore be 
+
+
+
+\[
+    X \in \mathbb{R}^m, \{Y, b\} \in \mathbb{R}^n, W \in \mathbb{R}^{m x n}
+\]
+\[
+    f(X) = WX + b \tag{2.3} \label{func:linearLayer}
+\]
  
 \textbf{Referanse til taylor series expansion? Finn i Calculus bok}
 
@@ -69,27 +82,27 @@ if we see that changing the function structure improves at mapping the input to 
     \centering
     \subfloat[\centering Input x values plotted against their corresponding y values]{{\includegraphics[width=7cm]{figures/background/linreg_input_illustrated.png} }}%
     \qquad
-    \subfloat[\centering label 2]{{\includegraphics[width=7cm]{figures/background/MSE_illustrated.png}}}
+    \subfloat[\centering Function $ \eqref{func:mse} $ applied to function $ \eqref{linreg} $ with optimized function variables $ w_0 $ and $ b_0 $]{{\includegraphics[width=7cm]{figures/background/MSE_illustrated.png}}}
     \caption{Linear regression illustrated}%
     \label{fig:linearRegression}%
 \end{figure}
 
 
 
-\subsubsection{Loss}
+\subsection{Loss}
 
 In the previous section, a measure of how 'wrong' a mapping of input points to their corresponding output points was defined.
 In the litterature, this measure is referred to as the loss function. 
-The loss function defined in $ \eqref{mse} $ is named 'Mean Squared Error Loss', 
+The loss function defined in $ \eqref{func:mse} $ is named 'Mean Squared Error Loss', 
 due to the fact that it is defined by the mean of the squared difference between our function's predictions and the true values.
 The 'Mean Squared Error Loss' operator is referred to as 'MSE' for the rest of this thesis.
 
 It is possible to define different loss functions. A loss function must be nonnegative for all input values.
 Different loss functions will interpret the performance of a functions mapping of the given input data to its corresponding output in different ways.
-The difference in ... can be illustrated by observing the result of applying the loss function defined in $ \eqref{mae} $, typically referred to as 'Mean Absolute Error Loss', shortened to 'MAE' in this thesis, as opposed using MSE.
+The difference in ... can be illustrated by observing the result of applying the loss function defined in $ \eqref{func:mae} $, typically referred to as 'Mean Absolute Error Loss', shortened to 'MAE' in this thesis, as opposed using MSE.
 
 \[ 
-    \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \sqrt{\big(y_i - f(x_i)\big)^2} \tag{2.2} \label{mae} 
+    \mathcal{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \sqrt{\big(y_i - f(x_i)\big)^2} \tag{2.4} \label{func:mae} 
 \]
 
 While MSE loss sums over the squares of errors, MAE sums over the absolute errors.
@@ -97,10 +110,29 @@ Using MAE, each prediction's error term will grow linearly, given the true outpu
 Using MSE, however, each prediction's error term will grow exponentially, given the true output value.
 As a consequence, 'MAE' will place equal weight emphasis on each prediction's error.
 MSE will place more emphasis on predictions that are further from the true output values.
-Different loss functions can therefore be applied to different problems to find different solutions.
+Different loss functions can therefore be applied to different problems to find different solutions. 
+Figure $ \eqref{fig:lossFunctions} $ illustrates an example of different loss functions being applied to the same prediction function.
+The optimal function parameters were found using the MAE operator. When the MSE operator is applied to the same function parameters,
+the MSE operator does not produce its lowest possible value.
 
+\begin{figure}
+    \centering
+    \subfloat[\centering Loss function $ \eqref{func:mae} $ applied to function $ \eqref{linreg} $ with optimized function variables $ w_0 $ and $ b_0 $ ]{{\includegraphics[width=7cm]{figures/background/loss/mae_optimal.png}}}
+    \qquad
+    \subfloat[\centering Loss function $ \eqref{func:mse} $ applied to function $ \eqref{linreg} $ with function variables $ w_0 $ and $ b_0 $ optimised using  loss function $ \eqref{func:mae} $ ]{{\includegraphics[width=7cm]{figures/background/loss/mse_not_optimal.png} }}%
 
-FIGUR
+    \caption{Different loss functions applied to the same prediction function}%
+    \label{fig:lossFunctions}%
+\end{figure}
+
+The loss functions presented so far in this section have all been focused on the regression task in machine learning applications.
+For prediction tasks, a better suited loss function should be used. A common loss function for this kind of task
+is the cross entropy loss function, defined in $ \eqref{func:crossentropy} $
+
+\[
+    \mathcal{L} = - \sum_{i = 0}^{|X|}p(y_i) log\big(f(x_i)\big)
+    \tag{2.5} \label{func:crossentropy}
+\]
 
 
 
