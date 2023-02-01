@@ -82,14 +82,27 @@ In the previous section, a measure of how 'wrong' a mapping of input points to t
 In the litterature, this measure is referred to as the loss function. 
 The loss function defined in $ \eqref{mse} $ is named 'Mean Squared Error Loss', 
 due to the fact that it is defined by the mean of the squared difference between our function's predictions and the true values.
+The 'Mean Squared Error Loss' operator is referred to as 'MSE' for the rest of this thesis.
 
-It is possible to define different loss functions. 
+It is possible to define different loss functions. A loss function must be nonnegative for all input values.
 Different loss functions will interpret the performance of a functions mapping of the given input data to its corresponding output in different ways.
-If we 
+The difference in ... can be illustrated by observing the result of applying the loss function defined in $ \eqref{mae} $, typically referred to as 'Mean Absolute Error Loss', shortened to 'MAE' in this thesis, as opposed using MSE.
 
 \[ 
     \mathbb{L} = \frac{1}{|X|}\sum_{i = 0}^{|X|} \sqrt{\big(y_i - f(x_i)\big)^2} \tag{2.2} \label{mae} 
 \]
+
+While MSE loss sums over the squares of errors, MAE sums over the absolute errors.
+Using MAE, each prediction's error term will grow linearly, given the true output value.
+Using MSE, however, each prediction's error term will grow exponentially, given the true output value.
+As a consequence, 'MAE' will place equal weight emphasis on each prediction's error.
+MSE will place more emphasis on predictions that are further from the true output values.
+Different loss functions can therefore be applied to different problems to find different solutions.
+
+
+FIGUR
+
+
 
 
 

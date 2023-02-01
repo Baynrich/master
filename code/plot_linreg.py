@@ -15,38 +15,11 @@ ticks_frequency = 1
 fig, ax = plt.subplots(figsize=(10, 10))
 ax.scatter(xs, ys, c=colors)
 
-"""
-# Draw lines connecting points to axes
-ax.plot([-2, -2], [-0.5, 0], c="m", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-2, -1.5], [0, 0], c="m", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-1.5, -1.5], [-0.5, 0], c="m", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-2, -1.5], [-0.5, -0.5], c="m", ls='--', lw=1.5, alpha=0.5)
-rect1 = matplotlib.patches.Rectangle((-2,-0.5), 0.5, 0.5, color='m', alpha=0.15)
-ax.add_patch(rect1)
+ax.plot([-1, -1], [1, 0], c="g", ls='--', lw=1.5, alpha=0.5)
+ax.plot([2, 2], [2.5, 1.5], c="b", ls='--', lw=1.5, alpha=0.5)
 
-ax.plot([-1, -1], [1, 0.5], c="g", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-1, -1.5], [1, 1], c="g", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-1.5, -1.5], [0.5, 1], c="g", ls='--', lw=1.5, alpha=0.5)
-ax.plot([-1, -1.5], [0.5, 0.5], c="g", ls='--', lw=1.5, alpha=0.5)
-rect2 = matplotlib.patches.Rectangle((-1.5,0.5), 0.5, 0.5, color='g', alpha=0.15)
-ax.add_patch(rect2)
+ax.plot([-6, 6], [-2.5, 3.5])
 
-ax.plot([1, 1], [1, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
-ax.plot([1, 1.5], [1.5, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
-ax.plot([1.5, 1.5], [1, 1.5], c="r", ls='--', lw=1.5, alpha=0.5)
-ax.plot([1, 1.5], [1, 1], c="r", ls='--', lw=1.5, alpha=0.5)
-rect3 = matplotlib.patches.Rectangle((1, 1), 0.5, 0.5, color='r', alpha=0.15)
-ax.add_patch(rect3)
-
-ax.plot([2, 2], [2.5, 2], c="b", ls='--', lw=1.5, alpha=0.5)
-ax.plot([2, 1.5], [2.5, 2.5], c="b", ls='--', lw=1.5, alpha=0.5)
-ax.plot([1.5, 1.5], [2.5, 2], c="b", ls='--', lw=1.5, alpha=0.5)
-ax.plot([2, 1.5], [2, 2], c="b", ls='--', lw=1.5, alpha=0.5)
-rect4 = matplotlib.patches.Rectangle((1.5,2), 0.5, 0.5, color='b', alpha=0.15)
-ax.add_patch(rect4)
-
-ax.plot([-6, 6], [-2, 4])
-"""
 
 # Set identical scales for both axes
 ax.set(xlim=(xmin-1, xmax+1), ylim=(ymin-1, ymax+1), aspect='equal')
@@ -77,4 +50,4 @@ ax.set_yticks(np.arange(ymin, ymax+1), minor=True)
 # Draw major and minor grid lines
 ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
 
-plt.savefig('../figures/linreg_input_illustrated.png', format="png", bbox_inches='tight')
+plt.savefig('', format="png", bbox_inches='tight')
