@@ -3,6 +3,19 @@
 This chapter aims to explain the basic concepts that are the most important to the work in this thesis.
 
 
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% ---------------------- Graphs -------------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
+\section{Graphs}
+\subsection{Nodes and Edges}
+\subsection{Directed Acyclic Graphs}
+
+
+
+
 % -------------------------------------------------------
 % -------------------------------------------------------
 % ----------------- Machine Learning --------------------
@@ -39,6 +52,7 @@ In reality, our ability to reason tells us that this is not the case, and the se
 
 
 \subsection{Linear Regression}
+\label{subsection:linreg}
 
 As a first study in the implementation of machine learning, we look at linear regression.
 To explan linear regression, we view an example in a two dimensional, euclidean space.
@@ -79,7 +93,6 @@ A general formula for linear regression can therefore be
     f(X) = WX + b \tag{2.3} \label{func:linearLayer}
 \]
  
-\textbf{Referanse til taylor series expansion? Finn i Calculus bok}
 
 \begin{figure}
     \centering
@@ -139,15 +152,78 @@ is the cross entropy loss function, defined in $ \eqref{func:crossentropy} $.
 
 
 
+\subsection{Underfitting and overfitting}
+
+
+
+\section{Neural Networks}
 
 
 
 
-\subsection{Neural Networks}
-underfitting and overfitting?
-\subsubsection{Linear Layers}
-\subsubsection{Activation functions}
+This section aims to explain the foundational concepts of what is today referred to as Neural Networks.
+In section \ref{subsection:linreg}, the idea of Linear Regression was introduced.
+As the foundational concepts of neural networks are introduced, it is useful to keep the idea behind Linear Regression in mind.
+
+The explanation of Neural Networks is broken down into four parts. 
+First, two curical concepts are introduced, namely 'Linear layers' and 'activation functions'. 
+Then, this thesis assesses what is referred to as the 'forward pass', as this is the simplest to explain.
+Finally, the 'backpropagation step' is assessed.
+
+
+\subsection{Linear layers}
+
+From our introduction of linear layers, we remember the multi-dimensional regression formula defined in equation \ref{func:linearLayer}
+
+
+\subsection{Activation functions}
+
+Activation functions are a set of non-linear functions that are utilised in neural networks to ensure non-linearity between the network layers.
+An activation function may take many forms, as any non-linear mapping of input values, defined on all real numbers, will function as an activation function.
+
+
+
+\subsubsection{Sigmoid}
+
+The sigmoid function maps any given input value to a value between 0 and 1. 
+
+
+
+
+\[
+    Sigmoid(x) =  \frac{1}{1 + e^{-x}}
+    \tag{2.6} \label{func:sigmoid}
+\]
+
+\subsubsection{ReLU}
+
+The (Re)ctified (L)inear (U)nit maps any given input value to a value greater than 0, with no upper limit.
+
+\[
+    ReLU(x) =
+    \begin{cases}
+        0,& \text{if } x < 0\\
+        x,& \text{if } x\ge 0
+    \end{cases}
+    \tag{2.7} \label{func:relu}
+\]
+
+\textcolor{red}{\textbf{Vis is den deriverte her og snakk om den også?}}
+
+
+
+
+
+
+
+\subsection{Forward pass}
 \subsection{Backpropagation}
+Gradient descent
+Stochastic gradient descent
+Adam (Hvis det er denne som landes på.)
+
+
+
 \subsection{Supervised and unsupervised learning}
 
 
@@ -163,14 +239,10 @@ underfitting and overfitting?
 
 
 
-% -------------------------------------------------------
-% -------------------------------------------------------
-% ---------------------- Graphs -------------------------
-% -------------------------------------------------------
-% -------------------------------------------------------
-\section{Graphs}
-\subsection{Nodes and Edges}
-\subsection{Directed Acyclic Graphs}
+
+
+
+
 
 
 
