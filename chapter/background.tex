@@ -154,6 +154,9 @@ is the cross entropy loss function, defined in $ \eqref{func:crossentropy} $.
 
 \subsection{Underfitting and overfitting}
 
+\subsection{Supervised and unsupervised learning}
+
+
 
 
 \section{Neural Networks}
@@ -172,11 +175,21 @@ Finally, the 'backpropagation step' is assessed.
 
 
 \subsection{Linear layers}
+\label{subsection:linearLayers}
 
 From our introduction of linear layers, we remember the multi-dimensional regression formula defined in equation \ref{func:linearLayer}
 
 
+\textcolor{red}{\textbf{randomised weights}}
+
+\textcolor{red}{\textbf{randomised bias term}}
+
+
+
+
 \subsection{Activation functions}
+\label{subsection:activationFunctions}
+
 
 Activation functions are a set of non-linear functions that are utilised in neural networks to ensure non-linearity between the network layers.
 An activation function may take many forms, as any non-linear mapping of input values, defined on all real numbers, will function as an activation function.
@@ -210,6 +223,24 @@ The (Re)ctified (L)inear (U)nit maps any given input value to a value greater th
 
 \textcolor{red}{\textbf{Vis is den deriverte her og snakk om den også?}}
 
+\subsection{Neural Network Structure}
+
+Using the combined elements defined in sections \ref{subsection:linearLayers} and \ref{subsection:activationFunctions}, 
+a sample Neural Netowrk can be constructed. Furthermore, this Neural Netowrk can be used as a tool to explore the functionality of Neural Networks
+
+Assume a learning task where a ($ n_0 \times m_0 $)-dimensional matrix is given as input, and a ($ n_t \times m_t $)-dimensional output is desired. 
+For a classification task, the output is often a ($ num\_classes \times 1 $)-matrix. 
+For a regression task, the output may be a  ($ 1 \times 1 $)-matrix, a reconstruction of the input data, eg. a ($ n_0 \times m_0 $)-dimensional matrix, 
+or any other shape that fits the task at hand.
+A neural network can be constructed to fit this description. 
+
+A neural network consists of a series of linear layers performing a linear transformation of the output of the previous layer.
+The shape of the each linear layer's weight and bias matrix is determined by the previous layer's output shape, 
+as well as the desired input for the next layer. Except for the last layer, each linear layer is followed by an activation function.
+
+Let us therefor consider a simple, two layer neural network.
+
+
 
 
 
@@ -217,6 +248,8 @@ The (Re)ctified (L)inear (U)nit maps any given input value to a value greater th
 
 
 \subsection{Forward pass}
+
+
 \subsection{Backpropagation}
 Gradient descent
 Stochastic gradient descent
@@ -224,7 +257,6 @@ Adam (Hvis det er denne som landes på.)
 
 
 
-\subsection{Supervised and unsupervised learning}
 
 
 
@@ -241,7 +273,12 @@ Adam (Hvis det er denne som landes på.)
 
 
 
-
+% -------------------------------------------------------
+% -------------------------------------------------------
+% --------------------- Autoencoder ---------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
+\section{Autoencoders}
 
 
 
