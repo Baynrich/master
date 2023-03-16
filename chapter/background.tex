@@ -106,6 +106,7 @@ A general formula for linear regression can therefore be
 
 
 \subsection{Loss}
+\label{section:loss}
 
 In the previous section, a measure of how 'wrong' a mapping of input points to their corresponding output points was defined.
 In the litterature, this measure is referred to as the loss function. 
@@ -258,6 +259,7 @@ as well as the desired input for the next layer. Except for the last layer, each
 
 
 \subsection{Example Neural Network}
+\label{subsection:sample_network}
 
 To illustrate the inner workings of neural networks, an example neural network is provided. 
 The neural network accepts as input a $ 4 x 2 $ value matrix, and outputs a matrix with the same proportions.
@@ -350,13 +352,25 @@ Somewhat similarly, applying the sigmoid function would limit the network's proj
 This is not to say that the output of the linear transformation and the bias term cannot be altered to fit the given objective.
 Such may be the case in a scenario where the task is to predict a probability distribution. For the purposes of this example, no such alteration is needed.
 
+The propagation of the input variable through the network can be illustrated as in figure \ref{fig:sample_network}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics{figures/background/sample_network.png}
+    \caption{The network from section \ref{subsection:sample_network} illustrated}%
+    \label{fig:sample_network}%
+\end{figure}
+
+
+
 
 \subsection{Forward pass}
 
 During the forward pass, input data is passed through all the layers and activation functions constituting our Neural Network. 
 Matrix multplications followed by activation functions are applied to the input data, until some output is achieved, following the last layer.
 
-A loss function is then applied to the output of the linear layer, yielding a measure of the 'closeness' of the neural network's approximated output, and the desired output.
+As defined in section \ref{section:loss}, a loss function is then applied to the output of the linear layer, yielding a measure of the 'closeness' of the neural network's approximated output, and the desired output.
 During training, the initial forward passes of any neural network with a given architecture will return a random output in dimensions specified by the architecture.
 
 
