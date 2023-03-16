@@ -174,17 +174,6 @@ Then, this thesis assesses what is referred to as the 'forward pass', as this is
 Finally, the 'backpropagation step' is assessed.
 
 
-\subsection{Linear layers}
-\label{subsection:linearLayers}
-
-From our introduction of linear layers, we remember the multi-dimensional regression formula defined in equation \ref{func:linearLayer}
-
-
-\textcolor{red}{\textbf{randomised weights}}
-
-\textcolor{red}{\textbf{randomised bias term}}
-
-
 
 
 \subsection{Activation functions}
@@ -223,37 +212,166 @@ The (Re)ctified (L)inear (U)nit maps any given input value to a value greater th
 
 \textcolor{red}{\textbf{Vis is den deriverte her og snakk om den også?}}
 
+
+
+
+
+\subsection{Linear layers}
+\label{subsection:linearLayers}
+
+To introduce linear layers, recall the multi-dimensional regression formula defined in equation \ref{func:linearLayer}.
+In the litterature, linear layers may be referred to using various titles. 
+Among the most common names for this kind of function are 'Dense layers', 'Fully connected layers' or 'Multi layer perceptrons'.
+\textcolor{red}{\textbf{(Finn eksempler og legg inn referanse)}}
+The aforementioned titles all refer to an implementation of the formula \ref{func:linearLayer}. 
+For the purposes of this theses, the term 'Linear layers' will be used to denote this concept.
+
+The linear layer is the quintessential building block of neural networks. 
+Though more advanced layers for use in Neural Networks have been developed since linear layers were introduced, 
+linear layers are still a very common building block in modern network architectures. 
+
+Linear layers differ from multidimensional linear regression in the fact that the parameters of the linear layer are no 
+longer solved for the optimal solution of the input data.
+Instead, both the linear layer's weight- and bias terms, constituting the linear layer's parameters, are initialised randomly\textbf{\textcolor{red}{(obs, ikke helt random. Ofte trekt fra normaldistribusjon? Sjekk hva torch geometric gjør.)}}, 
+and their optimal values are approached using some algorithm. This algorithm will be discussed further in section \ref{subsection:backpropagation}.
+
+
+
+
+
+
+
 \subsection{Neural Network Structure}
 
 Using the combined elements defined in sections \ref{subsection:linearLayers} and \ref{subsection:activationFunctions}, 
-a sample Neural Netowrk can be constructed. Furthermore, this Neural Netowrk can be used as a tool to explore the functionality of Neural Networks
+a sample Neural Network can be constructed. Furthermore, this Neural Netowrk can be used as a tool to explore the functionality of Neural Networks
 
 Assume a learning task where a ($ n_0 \times m_0 $)-dimensional matrix is given as input, and a ($ n_t \times m_t $)-dimensional output is desired. 
 For a classification task, the output is often a ($ num\_classes \times 1 $)-matrix. 
 For a regression task, the output may be a  ($ 1 \times 1 $)-matrix, a reconstruction of the input data, eg. a ($ n_0 \times m_0 $)-dimensional matrix, 
 or any other shape that fits the task at hand.
-A neural network can be constructed to fit this description. 
+A neural network can be constructed to fit this description.
 
 A neural network consists of a series of linear layers performing a linear transformation of the output of the previous layer.
 The shape of the each linear layer's weight and bias matrix is determined by the previous layer's output shape, 
 as well as the desired input for the next layer. Except for the last layer, each linear layer is followed by an activation function.
 
-Let us therefor consider a simple, two layer neural network.
+
+\subsection{Example Neural Network}
+
+To illustrate the inner workings of neural networks, an example neural network is provided. 
+The neural network accepts as input a $ 4 x 2 $ value matrix, and outputs a matrix with the same proportions.
+Assume a two layer neural network in which the input is projected into the lower, $ 2 x 2 $ dimensional space, is desired.
+The ReLU activation function is applied as a non-linearity.
 
 
+\subsubsection{Input}
+\[
+X_0 = 
+\begin{bmatrix}
+    x^{0,\space 0}_0 & x^{0,\space 1}_0 \\
+    x^{1,\space 0}_0 & x^{1,\space 1}_0 \\
+    x^{2,\space 0}_0 & x^{2,\space 1}_0 \\
+    x^{3,\space 0}_0 & x^{3,\space 1}_0
+\end{bmatrix}
+\]
 
 
+\subsubsection{First layer}
+In the first layer, initialise a weight matrix such that the linear transformation of out input and the weight matrix yields a matrix with desired dimensions.
+In this case, the weight matrix is a $ 2 x 4 $-dimensional matrix, such that the matrix product of the weight matrix and the input matrix is a $ 2 x 2 $-dimensional matrix.
+\[
+W_0 =
+\begin{bmatrix}
+    w^{0,\space 0}_0 & w^{0,\space 1}_0 & w^{0,\space 2}_0 & w^{0,\space 2}_0 \\
+    w^{1,\space 0}_0 & w^{1,\space 1}_0 & w^{1,\space 2}_0 & w^{1,\space 2}_0
+\end{bmatrix}
+\]
+
+In addition to the weight matrix, a bias term matrix is initialised. This matrix is added to the matrix product of the weight matrix and the input matrix.
+\[
+B_0 = 
+\begin{bmatrix}
+    b^{0,\space 0}_1 & b^{0,\space 1}_1 \\
+    b^{1,\space 0}_1 & b^{1,\space 1}_1
+\end{bmatrix}
+\]
+
+Matrices $ W_0 $ and $ B_0 $ contain the trainable parameters for this linear layer.
+This linear layer's output can be calculated by performing the linear transformation as described, adding the bias term, and performing the ReLU activation function on the result.
+
+\[
+Y_1 = ReLU(W_0 X_0 + B_0) = 
+\begin{bmatrix}
+    y^{0,\space 0}_1 & y^{0,\space 1}_1 \\
+    y^{1,\space 0}_1 & y^{1,\space 1}_1 \\
+\end{bmatrix}
+\]
+
+\subsubsection{Second layer}
+Similarly, for the second layer, initialise a weight matrix such that the linear transformation of the weight matrix and the output of the previous linear layer yields an output which matches our desired properties.
+In this case, such a weight matrix is $ 4 x 2 $-dimensional.
+\[
+W_1 = 
+\begin{bmatrix}
+    w_1^{0,\space 0} & w_1^{0,\space 1} \\
+    w_1^{1,\space 0} & w_1^{1,\space 1} \\
+    w_1^{2,\space 0} & w_1^{2,\space 1} \\
+    w_1^{3,\space 0} & w_1^{3,\space 1}
+\end{bmatrix}
+\]
+
+Again, a bias term matrix is intialised with the same dimensions as the linear transformation of the weight matrix and the output of the previous layer.
+\[
+B_1 = 
+\begin{bmatrix}
+    b_1^{0,\space 0} & b_1^{0,\space 1} \\
+    b_1^{1,\space 0} & b_1^{1,\space 1} \\
+    b_1^{2,\space 0} & b_1^{2,\space 1} \\
+    b_1^{3,\space 0} & b_1^{3,\space 1}
+\end{bmatrix}
+\]
 
 
+Calculate the network's output multiplying the weight matrix with the output of the previous layer, and add the bias term.
+\[
+\hat{Y} = W_1 Y_1 + B_1 =
+\begin{bmatrix}
+    \hat{y}^{0,\space 0} & \hat{y}^{0,\space 1} \\
+    \hat{y}^{1,\space 0} & \hat{y}^{1,\space 1} \\
+    \hat{y}^{2,\space 0} & \hat{y}^{2,\space 1} \\
+    \hat{y}^{3,\space 0} & \hat{y}^{3,\space 1}
+\end{bmatrix}
+\]
+
+Note that no activation function is applied to the output of the last layer. 
+Applying the ReLU function in this scenario would cause the network's projection space to be limited to the positive real numbers.
+Somewhat similarly, applying the sigmoid function would limit the network's projection space to real numbers between 0 and 1. 
+This is not to say that the output of the linear transformation and the bias term cannot be altered to fit the given objective.
+Such may be the case in a scenario where the task is to predict a probability distribution. For the purposes of this example, no such alteration is needed.
 
 
 \subsection{Forward pass}
 
+During the forward pass, input data is passed through all the layers and activation functions constituting our Neural Network. 
+Matrix multplications followed by activation functions are applied to the input data, until some output is achieved, following the last layer.
+
+A loss function is then applied to the output of the linear layer, yielding a measure of the 'closeness' of the neural network's approximated output, and the desired output.
+During training, the initial forward passes of any neural network with a given architecture will return a random output in dimensions specified by the architecture.
+
+
 
 \subsection{Backpropagation}
-Gradient descent
-Stochastic gradient descent
-Adam (Hvis det er denne som landes på.)
+\label{subsection:backpropagation}
+
+The process of optimizing the parameters of a neural network model is commonly referred to as 'Backpropagation'.
+One common such algorithm is the Gradient Descent algorithm.
+
+\subsubsection{Gradient Descent}
+
+The Gradient Descent algorithm utilises the gradient of 
+
+\subsubsection{Adding Stochasticity}
 
 
 
@@ -261,6 +379,32 @@ Adam (Hvis det er denne som landes på.)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+\textcolor{red}{\textbf{
+    Chain rule (den deriverte langt tilbake i tid. Vanishing/Exploding gradients?)
+    Gradient descent
+    Stochastic gradient descent
+    Adam (Hvis det er denne som landes på.)
+}}
+
+
+
+
+
+
+
+\subsection{A sample training loop}
 
 
 
