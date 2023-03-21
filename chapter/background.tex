@@ -69,7 +69,7 @@ we introduce two variables $ w_0 $ and $ b_0 $. We define a function to map our 
 
 We also introduce some measure of how well our function $ \eqref{linreg} $
 maps our input to our output. As we tune our function variables $ w_0 $ and $ b_0 $ to better map the input to its corresponding output,
-the measure will decrease. There exists values for our variables $ w_0 $ and $ b_0 $  such that the measure defined in $ \eqref{mse} $ reaches its lowest possible value.
+the measure will decrease. There exists values for our variables $ w_0 $ and $ b_0 $  such that the measure defined in $ \ref{func:mse} $ reaches its lowest possible value.
 In this state, the function optimally maps the input data to with its corresponding output, given our function.
 
 \[
@@ -389,7 +389,7 @@ Furthermore, the successors of Gradient Descent will be discussed.
     \subfloat[\centering A model parameter's current value as well as it's derivative, headed towards the global minimum.]{{\includegraphics[width=7cm]{figures/background/gradient.png} }}%
     \qquad
     \subfloat[\centering A model parameter's current value as well as it's derivative, headed towards a local minimum.]{{\includegraphics[width=7cm]{figures/background/gradient_local_minimum.png}}}
-    \caption{}%
+    \caption{Parameter Gradients}%
     \label{fig:parameter_gradient}%
 \end{figure}
 
@@ -400,9 +400,12 @@ As there exists a measure of the accuracy of the neural network's prediction and
 it is possible to quantify each model parameter's effect on the resulting output. 
 This value is given by the derivative of the loss, in relation to the given model parameter.
 
+\textbf{Convergence}
+
 Assume a scenario where at each iteration, a neural network model is trained by providing identical input to the model, 
 and it's accuracy is measured by the same target value. Though this method of training the model would provide poor results in any real life application,
 it is useful to consider to illustrate the following point. In this scenario, each model parameter's optimal value curve will stay consistent between training iterations.
+
 \textcolor{red}{\textbf{Proof?}} It is obvious then that at each training iteration, 
 updating the model parameters in the direction of their respective derivatives' absolute negative values
 will result in the model parameters converging either at a local or the global minima,
@@ -413,7 +416,33 @@ given the initial values of the network's parameters, and the loss function. Fig
 may not correspond to the globally optimal set of model parameters. In any case, model parameters trained on identical input data and output data at each iteration
 will likely not generalise well to unseen data.
 
-Instead of providing identical input and comparing with identical output at each iteration, new input/output pairs can be provided at every iteration.
+Rather than providing identical input and comparing with identical output at each iteration, new input/output pairs can be provided at every iteration. 
+In such a case, the shape of the parameters' derivative loss fuctions as illustrated in figure \ref{fig:parameter_gradient} 
+will not remain consistent between training iterations. Instead, the model parameters will converge towards some optimal value
+that maps the set of input data to its corresponding output.
+
+\textbf{Chain Rule}
+
+Though calculating the derivative of the loss function in regard to any model parameter may seem like a difficult task, it is in fact elementary.
+To calculate the derivative of a given parameter, we utilise the chain rule of derivatives from calculus.
+
+Assume some function $ g(c) $, differentiable at $ c $, and some function $ f(g(c)) $, differentiable at $ g(c) $. 
+Then, $ f \circ g $ is differentiable at $ c $, and $ (f \circ g)'(c) = (f' \circ g)(c) \cdot g'(c)  $ \cite{chainRule} 
+
+For the purposes of this thesis, with the same functions and variables as described above, this formulation is rewritten in Leibniz notation, given in formula \ref{func:leibnizChainRule}.
+
+\[
+    \frac{\delta f}{\delta c} = \frac{\delta f}{\delta g} \cdot \frac{\delta g}{\delta c} \tag{2.8} \label{func:leibnizChainRule}
+\]
+
+In a case where $ g(c) $ can be described by a differentiable equation, a recursive relation is observed, which can be exploited. 
+By building neural networks that are differentiable at every part in every layer, calculating the derivative of any parameter in the network then becomes trivial.
+
+To illustrate this property, recall the example network provided in section \ref{subsection:sample_network}. 
+In a first scenario, the derivative of network parameter $ w_1^{0,\space 0} $ is calculated.
+
+The objective derivative can be stated as $ \frac{\delta \mathbb{L}}{\delta w^{i, j}} $.
+Using the formula given in \ref{func:leibnizChainRule}, we redefine this derivative as the product of \textcolor{red}{\textbf{stemmer dette?}}its partial derivatives.
 
 
 
@@ -421,8 +450,21 @@ Instead of providing identical input and comparing with identical output at each
 
 
 
+Assuming MSE loss as defined in \ref{func:mse} is used, and we know the model prediction is a function of the model parameters, 
+given a model parameter, we identify the derivative of MSE as the following.
 
 
+\[
+    \frac{\delta MSE^{i, j}}{\delta w_1^{i, \space j}} MSE^{i, j} = 2(y^{i, j} - \hat{y}^{i, j})
+\]
+
+
+No activation function is applied to the output layer in this example instance. Recall then also that $ \hat{y} $ is given as a function $ \hat{y} = W_1 \cdot A_0 + B_1 $. 
+It follows that $ \hat{y}(A) $ is differentiable, with the following function.
+
+\[
+    \frac{\delta \hat{y}^{i, j}}{\delta w^{i,\space j}} = a_0^{i, \space j}
+\]
 
 
 
@@ -447,20 +489,12 @@ Instead of providing identical input and comparing with identical output at each
 
 
 
-
-
-
-
-
-
-
-
-
 \textcolor{red}{\textbf{
-    Chain rule (den deriverte langt tilbake i tid. Vanishing/Exploding gradients?)
-    Gradient descent
+    Chain rule (den deriverte langt tilbake i tid. )
     Stochastic gradient descent
     Adam (Hvis det er denne som landes på.)
+    Vanishing/Exploding gradients?
+    Autograd i pytorch.
 }}
 
 
