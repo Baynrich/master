@@ -239,9 +239,6 @@ and their optimal values are approached using some algorithm. This algorithm wil
 
 
 
-
-
-
 \subsection{Neural Network Structure}
 
 Using the combined elements defined in sections \ref{subsection:linearLayers} and \ref{subsection:activationFunctions}, 
@@ -378,14 +375,68 @@ During training, the initial forward passes of any neural network with a given a
 \subsection{Backpropagation}
 \label{subsection:backpropagation}
 
-The process of optimizing the parameters of a neural network model is commonly referred to as 'Backpropagation'.
-One common such algorithm is the Gradient Descent algorithm.
+The process of optimizing a neural network model is commonly referred to as 'backpropagation'.
+The goal of backpropagation is to optimize the model parameters such that for any given input,
+the model provides the desired output. Many algorithms have been created to perform this task.
+One common such algorithm is the Gradient Descent algorithm. In this thesis, 
+the Gradient Descent algorithm will be used to discuss the implementation of backpropagation.
+Furthermore, the successors of Gradient Descent will be discussed.
 
 \subsubsection{Gradient Descent}
 
-The Gradient Descent algorithm utilises the gradient of 
+\begin{figure}
+    \centering
+    \subfloat[\centering A model parameter's current value as well as it's derivative, headed towards the global minimum.]{{\includegraphics[width=7cm]{figures/background/gradient.png} }}%
+    \qquad
+    \subfloat[\centering A model parameter's current value as well as it's derivative, headed towards a local minimum.]{{\includegraphics[width=7cm]{figures/background/gradient_local_minimum.png}}}
+    \caption{}%
+    \label{fig:parameter_gradient}%
+\end{figure}
 
-\subsubsection{Adding Stochasticity}
+The Gradient Descent algorithm utilises the gradient of the model's output in relation to every model parameter
+to update each parameter. This idea is illustrated in figure \ref{fig:parameter_gradient}. 
+\textcolor{red}{\textbf{Proof?}} It is known that each model parameter has an optimal value that best maps the model's input to desired output.
+As there exists a measure of the accuracy of the neural network's prediction and the desired value, 
+it is possible to quantify each model parameter's effect on the resulting output. 
+This value is given by the derivative of the loss, in relation to the given model parameter.
+
+Assume a scenario where at each iteration, a neural network model is trained by providing identical input to the model, 
+and it's accuracy is measured by the same target value. Though this method of training the model would provide poor results in any real life application,
+it is useful to consider to illustrate the following point. In this scenario, each model parameter's optimal value curve will stay consistent between training iterations.
+\textcolor{red}{\textbf{Proof?}} It is obvious then that at each training iteration, 
+updating the model parameters in the direction of their respective derivatives' absolute negative values
+will result in the model parameters converging either at a local or the global minima,
+given that the model is given unlimited training iterations, \textcolor{red}{\textbf{Utdyp her?}} and a decreasing step size.
+
+In such a scenario, the neural network's parameters will converge towards a set of values which optimally maps the model's input to the desired output,
+given the initial values of the network's parameters, and the loss function. Figure \ref{fig:parameter_gradient} illustrates that this set of model parameters
+may not correspond to the globally optimal set of model parameters. In any case, model parameters trained on identical input data and output data at each iteration
+will likely not generalise well to unseen data.
+
+Instead of providing identical input and comparing with identical output at each iteration, new input/output pairs can be provided at every iteration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{A note on bayesian statistics}
+
+
+
+\subsubsection{Stochastic Gradient Descent}
 
 
 
@@ -452,13 +503,3 @@ The Gradient Descent algorithm utilises the gradient of
 \subsection{Permutation invariance and equivariance}
 \subsection{Attention and Message Passing}
 
-
-
-
-% -------------------------------------------------------
-% -------------------------------------------------------
-% --------------- Gated Recurrent Units -----------------
-% -------------------------------------------------------
-% -------------------------------------------------------
-\section{Gated Recurrent Units}
-\subsection{Backpropagation Through Time}
