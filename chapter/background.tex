@@ -400,6 +400,7 @@ As there exists a measure of the accuracy of the neural network's prediction and
 it is possible to quantify each model parameter's effect on the resulting output. 
 This value is given by the derivative of the loss, in relation to the given model parameter.
 
+
 \textbf{Convergence}
 
 Assume a scenario where at each iteration, a neural network model is trained by providing identical input to the model, 
@@ -421,10 +422,12 @@ In such a case, the shape of the parameters' derivative loss fuctions as illustr
 will not remain consistent between training iterations. Instead, the model parameters will converge towards some optimal value
 that maps the set of input data to its corresponding output.
 
+
 \textbf{Chain Rule}
 
 Though calculating the derivative of the loss function in regard to any model parameter may seem like a difficult task, it is in fact elementary.
 To calculate the derivative of a given parameter, we utilise the chain rule of derivatives from calculus.
+Rodriguez \& Fernández provides the following defintion of the chain rule.
 
 Assume some function $ g(c) $, differentiable at $ c $, and some function $ f(g(c)) $, differentiable at $ g(c) $. 
 Then, $ f \circ g $ is differentiable at $ c $, and $ (f \circ g)'(c) = (f' \circ g)(c) \cdot g'(c)  $ \cite{chainRule} 
@@ -439,15 +442,14 @@ In a case where $ g(c) $ can be described by a differentiable equation, a recurs
 By building neural networks that are differentiable at every part in every layer, calculating the derivative of any parameter in the network then becomes trivial.
 
 To illustrate this property, recall the example network provided in section \ref{subsection:sample_network}. 
-In a first scenario, the derivative of network parameter $ w_1^{0,\space 0} $ is calculated.
+In a first scenario, the derivative of network parameter $ w_1^{i,\space j} $ is calculated.
 
-The objective derivative can be stated as $ \frac{\delta \mathbb{L}}{\delta w^{i, j}} $.
-Using the formula given in \ref{func:leibnizChainRule}, we redefine this derivative as the product of \textcolor{red}{\textbf{stemmer dette?}}its partial derivatives.
-
-
-
+The objective derivative can be stated as $ \frac{\delta \mathcal{L}}{\delta w^{i, j}} $.
+Using the formula given in \ref{func:leibnizChainRule}, we redefine this derivative as the product of \textcolor{red}{\textbf{stemmer partial derivatives?}}its partial derivatives.
+The derivative is redefined as the following equation.
 
 
+$$ \frac{\delta \mathcal{L}}{\delta w^{i, \space j}} = \frac{\delta \mathcal{L}}{\delta \hat{y}} \cdot \frac{\hat{y}}{w^{i, \space j}} $$
 
 
 Assuming MSE loss as defined in \ref{func:mse} is used, and we know the model prediction is a function of the model parameters, 
@@ -466,37 +468,43 @@ It follows that $ \hat{y}(A) $ is differentiable, with the following function.
     \frac{\delta \hat{y}^{i, j}}{\delta w^{i,\space j}} = a_0^{i, \space j}
 \]
 
+\textcolor{red}{\textbf{Obs, dette stemmer ikke. Vis til hvordan alle output-verdier påvirker gradient. Vis til at gradient descent itererer over alle train samples før gradient regnes ut.}}
 
 
+Having calculated the gradient for the given parameter, the parameter is updated in order to minimise the calculated loss in the current iteration. 
+The update is limited by some step size, which is a set hyperparameter. The step size may be fixed, or it may decay over time.
+The update is described in function \ref{func:gradientUpdate}, in which $ \delta $ is the computed gradient, and $ \gamma $ is the set learning rate.
 
 
-
+\[ w^{i, \space j} = w^{i, \space j} + \delta \gamma \tag{2.9}  \label{func:gradientUpdate} \]
 
 
 
 \subsubsection{A note on bayesian statistics}
 
-
-
 \subsubsection{Stochastic Gradient Descent}
 
+Though the Gradient Descent algorithm does converge at a set of model parameters, the algorithm is flawed.
+The algorithm requires the model to iterate over all samples before computing the gradient and performing the parameter update.
+This process is computationally expensive, and may take a long time. 
+
+Rather than iterating over training input, the Stochastic Gradient Descent selects a subset of the training data.
+The dataset is shuffled, and at every iteration, a selected number of samples are selected. 
+The number of samples used in every iteration is a hyperparameter.
+The data is passed through the model, and the loss function is calculated over this quantity.
+
+By performing the parameter updates in this fashion, far less computation is required for each parameter update.
+As a consequence, the neural network's model parameters will converge faster. 
+Also, while in the Gradient Descent case, the training target will remain the same every time the parameter gradients are computed.
+\textcolor{red}{\textbf{Gjør dette forskjell?}} In the stochastic case, the mean training target will change at each paramter update iteration. 
+Training target variation is increased, which also aids the algorithm's convergence property.
 
 
 
 
+\subsubsection{Adam}
 
-
-
-
-
-\textcolor{red}{\textbf{
-    Chain rule (den deriverte langt tilbake i tid. )
-    Stochastic gradient descent
-    Adam (Hvis det er denne som landes på.)
-    Vanishing/Exploding gradients?
-    Autograd i pytorch.
-}}
-
+\subsubsection{Autograd}
 
 
 
