@@ -172,7 +172,7 @@ As the foundational concepts of neural networks are introduced, it is useful to 
 The explanation of Neural Networks is broken down into four parts. 
 First, two curical concepts are introduced, namely 'Linear layers' and 'activation functions'. 
 Then, this thesis assesses what is referred to as the 'forward pass', as this is the simplest to explain.
-Finally, the 'backpropagation step' is assessed.
+Finally, the 'optimization step' is assessed.
 
 
 
@@ -234,7 +234,7 @@ linear layers are still a very common building block in modern network architect
 Linear layers differ from multidimensional linear regression in the fact that the parameters of the linear layer are no 
 longer solved for the optimal solution of the input data.
 Instead, both the linear layer's weight- and bias terms, constituting the linear layer's parameters, are initialised randomly\textbf{\textcolor{red}{(obs, ikke helt random. Ofte trekt fra normaldistribusjon? Sjekk hva torch geometric gjør.)}}, 
-and their optimal values are approached using some algorithm. This algorithm will be discussed further in section \ref{subsection:backpropagation}.
+and their optimal values are approached using some algorithm. This algorithm will be discussed further in section \ref{subsection:optimizationStep}.
 
 
 
@@ -362,7 +362,7 @@ The propagation of the input variable through the network can be illustrated as 
 
 
 
-\subsection{Forward pass}
+\subsection{Forward Pass}
 
 During the forward pass, input data is passed through all the layers and activation functions constituting our Neural Network. 
 Matrix multplications followed by activation functions are applied to the input data, until some output is achieved, following the last layer.
@@ -372,15 +372,16 @@ During training, the initial forward passes of any neural network with a given a
 
 
 
-\subsection{Backpropagation}
-\label{subsection:backpropagation}
+\subsection{Optimization Step}
+\label{subsection:optimizationStep}
 
-The process of optimizing a neural network model is commonly referred to as 'backpropagation'.
-The goal of backpropagation is to optimize the model parameters such that for any given input,
+The process of optimizing a neural network model is commonly referred to as the 'optimization step'.
+The goal of the optimization step is to optimize the model parameters such that for any given input,
 the model provides the desired output. Many algorithms have been created to perform this task.
 One common such algorithm is the Gradient Descent algorithm. In this thesis, 
-the Gradient Descent algorithm will be used to discuss the implementation of backpropagation.
-Furthermore, the successors of Gradient Descent will be discussed.
+the Gradient Descent algorithm will be used to discuss the implementation of the optimization step.
+Furthermore, successors of Gradient Descent will be discussed.
+
 
 \subsubsection{Gradient Descent}
 
@@ -445,8 +446,8 @@ To illustrate this property, recall the example network provided in section \ref
 In a first scenario, the derivative of network parameter $ w_1^{i,\space j} $ is calculated.
 
 The objective derivative can be stated as $ \frac{\delta \mathcal{L}}{\delta w^{i, j}} $.
-Using the formula given in \ref{func:leibnizChainRule}, we redefine this derivative as the product of \textcolor{red}{\textbf{stemmer partial derivatives?}}its partial derivatives.
-The derivative is redefined as the following equation.
+Using the formula given in \ref{func:leibnizChainRule}, we redefine this derivative as the product of its chain rule elements.
+The derivative is redefined in the following equation.
 
 
 $$ \frac{\delta \mathcal{L}}{\delta w^{i, \space j}} = \frac{\delta \mathcal{L}}{\delta \hat{y}} \cdot \frac{\hat{y}}{w^{i, \space j}} $$
@@ -476,7 +477,36 @@ The update is limited by some step size, which is a set hyperparameter. The step
 The update is described in function \ref{func:gradientUpdate}, in which $ \delta $ is the computed gradient, and $ \gamma $ is the set learning rate.
 
 
-\[ w^{i, \space j} = w^{i, \space j} + \delta \gamma \tag{2.9}  \label{func:gradientUpdate} \]
+\[ w^{i, \space j} = w^{i, \space j} - |\delta| \gamma \tag{2.9}  \label{func:gradientUpdate} \]
+
+\textbf{Backpropagation and PyTorch Autograd}
+
+In many pieces of litterature, the term 'optimization step' and the term 'backpropagation'
+are used synonymously. While the term 'backpropagation' is often interpreted, it actually
+refers to an implementation of the chain rule for calculating model parameter derivatives.
+The implementations should utilise dynamic programming to avoid excess computation.
+One such implementation is PyTorch's automatic differentiation system named Autograd.
+
+Autograd allows circumventing the computation of the derivatives as they are needed.
+Instead, as input data is passed through the model, 
+each operation performed using the model parameters are recorded.
+
+A directed acyclic graph in the shape of a tree, with edged pointing towards the root, 
+will be generated. 
+The current iteration's training input, as well as all model parameters, 
+will appear as leaf nodes in the tree.
+Mathematical operations performed on the tensors, 
+as well as the intermediate states between the operations will be represented as the child nodes of the described leaf nodes.
+In each intermediate node, the previous nodes' values will be saved in a context variable.
+The calculated loss will be the represented by the tree's root.
+
+This structure allows the PyTorch library to efficiently perform the backward pass.
+It needs only to perform the instructions specified at each intermediate node.
+Values utilised more than once in the backward pass will only be computed once.
+This makes PyTorch's Autograd system an efficient implementation of calculating the gradients,
+while still utilising the chain rule. \textbf{\textcolor{red}{dårlig formulert, skriv om.}}
+
+
 
 
 
@@ -493,18 +523,24 @@ The dataset is shuffled, and at every iteration, a selected number of samples ar
 The number of samples used in every iteration is a hyperparameter.
 The data is passed through the model, and the loss function is calculated over this quantity.
 
+Subsets of input data are passed through the model, and parameter updates are performed, until all input data has been passed through the model.
+This process may then be repeated until the model parameters converge.
+
 By performing the parameter updates in this fashion, far less computation is required for each parameter update.
 As a consequence, the neural network's model parameters will converge faster. 
 Also, while in the Gradient Descent case, the training target will remain the same every time the parameter gradients are computed.
-\textcolor{red}{\textbf{Gjør dette forskjell?}} In the stochastic case, the mean training target will change at each paramter update iteration. 
+\textcolor{red}{\textbf{Stemmer dette?}} In the stochastic case, the mean training target will change at each paramter update iteration. 
 Training target variation is increased, which also aids the algorithm's convergence property.
-
-
 
 
 \subsubsection{Adam}
 
-\subsubsection{Autograd}
+Adam is one of many successors of the SGD algorithm. 
+It is a notable algorithm, as it has become an industry standard in AI research.
+...
+
+
+
 
 
 
@@ -512,6 +548,7 @@ Training target variation is increased, which also aids the algorithm's converge
 
 
 \subsection{A sample training loop}
+...
 
 
 
@@ -531,6 +568,14 @@ Training target variation is increased, which also aids the algorithm's converge
 % -------------------------------------------------------
 \section{Autoencoders}
 
+This section aims to explain the popular neural network architecture referred to as the 'Autoencoder'.
+
+
+What is today commonly referred to as the 'Autoencoder' was by Kramer in 1989
+introduced as 'Nonlinear Principal Components Analysis using Autoassociative Neural Networks'\cite{autoencoderOrigin}.
+
+
+
 
 
 
@@ -541,7 +586,13 @@ Training target variation is increased, which also aids the algorithm's converge
 % -------------------------------------------------------
 % -------------------------------------------------------
 \section{Graph Neural Networks}
+
+The topic of learning on Graphs is well discussed in Bronstein et al.'s Geometric Deep Learning Blueprint \cite{geometricDeepLearningBlueprint}
+
+
+
 \subsection{The Convolution Layer}
 \subsection{Permutation invariance and equivariance}
 \subsection{Attention and Message Passing}
+\subsection{Graph Neural Network Architectures}
 
