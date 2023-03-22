@@ -469,7 +469,9 @@ It follows that $ \hat{y}(A) $ is differentiable, with the following function.
     \frac{\delta \hat{y}^{i, j}}{\delta w^{i,\space j}} = a_0^{i, \space j}
 \]
 
-\textcolor{red}{\textbf{Obs, dette stemmer ikke. Vis til hvordan alle output-verdier påvirker gradient. Vis til at gradient descent itererer over alle train samples før gradient regnes ut.}}
+
+\textcolor{red}{\textbf{Obs, dette stemmer ikke. Utvid til alle output verdier påvirket av weight}}
+
 
 
 Having calculated the gradient for the given parameter, the parameter is updated in order to minimise the calculated loss in the current iteration. 
@@ -477,7 +479,7 @@ The update is limited by some step size, which is a set hyperparameter. The step
 The update is described in function \ref{func:gradientUpdate}, in which $ \delta $ is the computed gradient, and $ \gamma $ is the set learning rate.
 
 
-\[ w^{i, \space j} = w^{i, \space j} - |\delta| \gamma \tag{2.9}  \label{func:gradientUpdate} \]
+\[ w^{i, \space j} = w^{i, \space j} - \delta \gamma \tag{2.9}  \label{func:gradientUpdate} \]
 
 \textbf{Backpropagation and PyTorch Autograd}
 
