@@ -538,7 +538,7 @@ Training target variation is increased, which also aids the algorithm's converge
 \subsubsection{Adam}
 
 Adam is one of many successors of the SGD algorithm. 
-It is a notable algorithm, as it has become an industry standard in AI research.
+It is a notable algorithm, as it has become an industry standard when developing AI tools.
 ...
 
 
@@ -549,8 +549,24 @@ It is a notable algorithm, as it has become an industry standard in AI research.
 
 
 
-\subsection{A sample training loop}
-...
+\subsection{Closing Remarks on Neural Networks}
+
+The neural network model becomes a better predictor of output data as a cycle of forward and backward passes
+is repeated until the neural network's weight matrices converge at a set of values.
+Due to the non-linearity introduced by the activation functions, it is obvious that
+such a model has much greater expressivity than its predecessor; the linear regression model.
+
+Given an unlimited amount of time and computation resouce, any of the optimization 
+algorithms mentioned in section \ref{subsection:optimizationStep} should converge 
+at an optimal set of parameters.
+The choice of optimization function is, however, a hyperparameter. 
+When creating a neural network, the decision will affect the speed at which the 
+network weights converge.
+As deep learning has become an industry standard, and the number of trainable model parameters
+is increasing, the decision of which optimizer to use is one to carefully consider.
+
+
+
 
 
 
@@ -589,12 +605,34 @@ introduced as 'Nonlinear Principal Components Analysis using Autoassociative Neu
 % -------------------------------------------------------
 \section{Graph Neural Networks}
 
-The topic of learning on Graphs is well discussed in Bronstein et al.'s Geometric Deep Learning Blueprint \cite{geometricDeepLearningBlueprint}
+The topic of learning on Graphs is discussed at length in Bronstein et al.'s 
+Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges \cite{geometricDeepLearningBlueprint}.
+
+
 
 
 
 \subsection{The Convolution Layer}
+
+\subsection{Matrix Representation of Graphs}
+A common way to represent a graph in code form by using two arrays. 
+One array represents node data as a $(n\times m)$-matrix, where $ n $ denotes the number of 
+nodes in the graph, and $ m $ denotes the number of data points for each node. 
+
+Edges are often in represented in one of two ways.
+One method creates a second array which represents the edge indices, 
+and is given as a $ (2\times e) $-matrix. 
+Any edge weights in this case must be represented by a separate $ (1\times e) $-dimensional matrix,
+in which each element represents a single edge weight.
+
+
 \subsection{Permutation invariance and equivariance}
+
+
+
+
+
+
 \subsection{Attention and Message Passing}
 \subsection{Graph Neural Network Architectures}
 
