@@ -10,8 +10,111 @@ This chapter aims to explain the basic concepts that are the most important to t
 % -------------------------------------------------------
 % -------------------------------------------------------
 \section{Graphs}
+\textcolor{red}{\textbf{Obs: I alle definisjoner, gi også definisjon som den er presentert i Geometric Deep Learning? (Nodes - domains, edges - signals)? Mat for kap \ref{section:gnn}}}
+The work in this thesis is based heavily on the theory of graphs. 
+As such, this section aims to provide a brief introduction to the subject.
+This section will introduce the central concepts of graphs, 
+as well as graph properties that will be used later in this thesis.
+
+
 \subsection{Nodes and Edges}
-\subsection{Directed Acyclic Graphs}
+
+In graph theory, a graph consists of an ordered pair of two sets $ \mathcal{V} $ and $ \mathcal{E} $.
+
+$$ \mathcal{G} = (\mathcal{V}, {\mathcal{E}}) $$
+
+The items of set $ \mathcal{V} $ are commonly called \textit{vertices} or \textit{nodes}. 
+For the purposes of this thesis, the term \textit{vertices} will be used.
+Each vertex may contain some arbitrarily shaped information, giving some indication of what the current vertex represents.
+Though this information may take any shape, it is often represented by a length $ n $ vector.
+
+$$ v = [v_0, v_1, ..., v_n], v \in \mathcal{V} $$
+
+The items of set $ \mathcal{E} $ are called \textit{edges}. 
+Each edge must be an item in the cartesian product of the set of vertices with itself.
+Where vertices typically aims to provide information about the graph elements, 
+edges show some relation between the graph elements, tying the elements together.
+As with vertices, edges may also contain some arbitrarily shaped information, 
+giving some indication of the current edge's representation.
+
+$$ \mathcal{E} \subseteq \mathcal{V} \times \mathcal{V} \label{func:edgeDefinition}$$
+
+
+As the graph structure components are defined so generally, the graph structure is applicable in many areas.
+In data management, vertices may be used to show data tables, and edges may show the relations between them.
+In social networks, each individual may be represented by vertices, while relationships are represented by edges.
+In molecular biology, genes may be represented by vertices, while gene interaction and causality may be represented by edges.
+
+
+\begin{figure}
+    \centering
+    \tikz
+    \graph[nodes={align=center}] { 
+        subgraph K_n [n=7,clockwise,radius=4cm, empty nodes, nodes={circle, draw}] 
+    };
+    \caption{An example graph with 7 vertices, with edges connecting all vertices to each other.}
+    \label{fig:exampleGraphConnected}%
+\end{figure}
+
+
+
+\subsection{Central Graph Properties}
+
+\subsubsection{Neighborhoods}
+
+The term \textit{neighborhood} in graph theory refers to a subset of the full graph.
+Each graph vertex's neighborhood, denoted $ N_{\mathcal{G}}(v_n) $, 
+is the subset of all vertices, in which each every vertex which shares an edge with $ v_n $ is a member.
+
+$$ \forall_{(v_i, v_j) \in \mathcal{E}}(v_j \equiv v_n \rightarrow v_i \in N_{\mathcal{G}}(v_n) \and) $$
+
+\subsubsection{Directed Graphs}
+
+A graph may be \textit{directed} or \textit{undirected}.
+In an undirected graph, edges have no direction. 
+One vertex's relation to the connected vertex is equal to its mirror connection.
+In a directed graph, this is not the case. In a directed graph, edges have a source and target node.
+Observing an edge from vertex $ v_n $ to vertex $ v_m $, 
+from vertex $v_n$'s perspective, $v_m$ is referred to as $v_n$'s \textit{child} vertex.
+From vertex $v_m$'s perspective, $v_n$ is referred to as $v_m$'s \textit{parent} vertex.
+
+In the directed graph case, when discussing a specific vertex neighborhood, more specification is required.
+Three sets could be considered to be the vertex's neighborhood.
+\begin{enumerate}
+    \item The set of parent vertices for the current vertex
+    \item The set of child vertices for the current vertex
+    \item The set of child and parent vertices for the current vertex
+\end{enumerate}
+
+For the purposes of this thesis, the set of parent vertices is considered to be the current vertex's neighborhood.
+
+
+
+\subsubsection{Adjecency Matrix}
+
+Viewing the edge definition provided in \ref{func:edgeDefinition}, 
+imagine plotting a table in which each row and column is indexed by a single element subset of the vertex set, 
+such that the table provides an overview of the cartesian product of the vertices. 
+This representation of edges is called the \textit{adjacency matrix}.
+
+
+
+\subsubsection{Graph cycles}
+
+
+
+
+
+
+\subsubsection{Connected Graph}
+connected
+weakly connected
+strongly connected.
+\subsubsection{Symmetry Groups}
+isomorphism
+permutations
+
+
 
 
 
@@ -45,10 +148,7 @@ it is difficult to design rules which can capture the sentiment of the sentence.
 On one hand, the words 'nice', 'fun', and 'kind' indicate this sentence may have a positive sentiment.
 In reality, our ability to reason tells us that this is not the case, and the sentence is of a negative nature.
 
-\textbf{Noen ord her om Classification vs Regression. Hva er forskjellen - hva er greien?}
-
-
-\textbf{Machine Learning is deeply rooted in Bayesian Statistics. (Noen gode setninger om bayes. Gjerne bayes teorem? Ikke mer enn et avsnitt. Dette er en AI-oppgave, ikke en statistikk-oppgave.)}
+\textcolor{red}{\textbf{Noen ord her om Classification vs Regression. Hva er forskjellen - hva er greien? Noen gode setninger om bayes?}}
 
 
 \subsection{Linear Regression}
@@ -255,7 +355,7 @@ The shape of the each linear layer's weight and bias matrix is determined by the
 as well as the desired input for the next layer. Except for the last layer, each linear layer is followed by an activation function.
 
 
-\subsection{Example Neural Network}
+\subsection{Example Neural Network \textcolor{red}{\textbf{Overflødig - kan fjernes?}}}
 \label{subsection:sample_network}
 
 To illustrate the inner workings of neural networks, an example neural network is provided. 
@@ -571,14 +671,6 @@ is increasing, the decision of which optimizer to use is one to carefully consid
 
 
 
-
-
-
-
-
-
-
-
 % -------------------------------------------------------
 % -------------------------------------------------------
 % --------------------- Autoencoder ---------------------
@@ -598,21 +690,23 @@ introduced as 'Nonlinear Principal Components Analysis using Autoassociative Neu
 
 
 
+
+
+
+
+
+
+
 % -------------------------------------------------------
 % -------------------------------------------------------
 % ---------------- Graph Neural Networks ----------------
 % -------------------------------------------------------
 % -------------------------------------------------------
 \section{Graph Neural Networks}
+\label{section:gnn}
 
 The topic of learning on Graphs is discussed at length in Bronstein et al.'s 
 Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges \cite{geometricDeepLearningBlueprint}.
-
-
-
-
-
-\subsection{The Convolution Layer}
 
 \subsection{Matrix Representation of Graphs}
 A common way to represent a graph in code form by using two arrays. 
@@ -624,6 +718,20 @@ One method creates a second array which represents the edge indices,
 and is given as a $ (2\times e) $-matrix. 
 Any edge weights in this case must be represented by a separate $ (1\times e) $-dimensional matrix,
 in which each element represents a single edge weight.
+
+Some such representation of graph data is possible to pass as input to a neural network consisting
+of linear layers, given that the architecture is designed with the two inputs in mind.
+This approach is problematic, as it does not consider the symmetry group of the input data
+to be equal to the input data. This architecture requires every permutation of the input data to be trained separately.
+
+
+
+
+
+
+\subsection{The Convolution Layer}
+
+
 
 
 \subsection{Permutation invariance and equivariance}
